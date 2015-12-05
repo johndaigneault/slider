@@ -1,13 +1,14 @@
 (function($) {
 
-	$.fn.slideShow = function() {
-	    return this.each(function( options ) {
+	$.fn.slideShow = function( options ) {
+	    return this.each(function() {
 		    
 		    var settings = $.extend({
 		            autoScroll: true,
 		            timer: 7500,
 		            resize: false,
 		            activeClass: 'active',
+		            touch: true,
 		        }, options ),
 		        
 				$container = $(this),
@@ -48,23 +49,28 @@
 				
 			}
 			
-			$slider.on("swipeleft", function() {
-				var idx = $slides.filter('.active').index(),
-					nextIdx = idx + 1 < length ? index + 1 : 0;
-				slideTo(nextIdx);
-				if ( settings.autoScroll ) {
-					clearInterval(timer);
-				}
-			});
+			if ( settings.touch ) {
 			
-			$slider.on("swiperight", function() {
-				var idx = $slides.filter('.active').index(),
-					prevIdx = idx - 1 < 0 ? length - 1 : index - 1;
-				slideTo(prevIdx);
-				if ( settings.autoScroll ) {
-					clearInterval(timer);
-				}
-			});
+				$slider.on({
+					swipeleft: function() {
+						var idx = $slides.filter( '.' + settings.activeClass ).index(),
+							nextIdx = idx + 1 < length ? index + 1 : 0;
+						slideTo(nextIdx);
+						if ( settings.autoScroll ) {
+							clearInterval(timer);
+						}
+					},
+					swiperight: function() {
+						var idx = $slides.filter( '.' + settings.activeClass ).index(),
+							prevIdx = idx - 1 < 0 ? length - 1 : index - 1;
+						slideTo(prevIdx);
+						if ( settings.autoScroll ) {
+							clearInterval(timer);
+						}
+					}
+				});
+							
+			}
 			
 			$slider.imagesLoaded(function() {
 				slideTo(index);
