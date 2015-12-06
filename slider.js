@@ -1,24 +1,24 @@
 (function($) {
 
 	$.fn.slideShow = function( options ) {
-	    return this.each(function() {
-		    
-		    var settings = $.extend({
-		            autoScroll: true,
-		            timer: 7500,
-		            resize: false,
-		            activeClass: 'active',
-		            touch: true
-		        }, options ),
-		        
+		return this.each(function() {
+			
+			var settings = $.extend({
+					autoScroll: true,
+					timer: 7500,
+					resize: false,
+					activeClass: 'active',
+					touch: true
+				}, options ),
+				
 				$container = $(this),
-			    $slider = $container.find('ul'),
-			    $slides = $slider.children('li'),
-			    length = $slides.size(),
+				$slider = $container.find('ul'),
+				$slides = $slider.children('li'),
+				length = $slides.size(),
 						
-			    index = 0,
+				index = 0,
 			   	
-			    slideTo = function(idx) {
+				slideTo = function(idx) {
 					$slides
 						.removeClass( settings.activeClass )
 						.eq(idx)
@@ -27,18 +27,18 @@
 							next();
 						});
 					index = idx;
-			    };
+				};
 			
 			if ( settings.resize ) {
 				
-			    var resizeContainer = function(idx) {
-				    $slider.height( $slides.eq(idx).height() );
-			    };
-			    
+				var resizeContainer = function(idx) {
+					$slider.height( $slides.eq(idx).height() );
+				};
+				
 			}
 			
 			if ( settings.autoScroll ) {
-			    
+				
 				var timer = setInterval( nextSlide, settings.timer );
 				
 				function nextSlide() {
