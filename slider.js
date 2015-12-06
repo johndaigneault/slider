@@ -8,7 +8,7 @@
 		            timer: 7500,
 		            resize: false,
 		            activeClass: 'active',
-		            touch: true,
+		            touch: true
 		        }, options ),
 		        
 				$container = $(this),
